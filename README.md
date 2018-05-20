@@ -5,7 +5,7 @@ http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
 
 ### Commands
 
-```python
+```Python
 python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg
 ```
 ```
