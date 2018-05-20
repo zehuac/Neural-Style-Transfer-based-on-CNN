@@ -48,7 +48,7 @@ class StyleTransfer:
     def __init__(self, content_layer_ids, style_layer_ids, init_image, content_image,
                  style_image, session, net, num_iter, loss_ratio, content_loss_norm_type,
                  style_image2=np.array([]), style_ratio=0.5, multi_style=False, color_convert_type="yuv",
-                 color_preserve=False):
+                 color_preserve=False, laplace=False, lap_lambda=10, tv=False):
 
         self.net = net
         self.sess = session
@@ -74,8 +74,13 @@ class StyleTransfer:
         self.content_loss_norm_type = content_loss_norm_type
         self.num_iter = num_iter
         self.loss_ratio = loss_ratio
+
+        # switches
         self.color_convert_type = color_convert_type        # Used for color
         self.color_preserve = color_preserve
+        self.laplace = laplace
+        self.lap_lambda = lap_lambda
+        self.tv = tv
 
         # build graph for style transfer
         self._build_graph()
@@ -118,6 +123,7 @@ class StyleTransfer:
         L_content = 0
         L_style = 0
         L_laplacian=0
+
         for id in self.Fs:
             if id in self.CONTENT_LAYERS:
                 ## content loss ##
@@ -155,18 +161,6 @@ class StyleTransfer:
 
                 L_style += w * (1. / (4 * N ** 2 * M ** 2)) * tf.reduce_sum(tf.pow((G-A), 2))
 
-                # laplacian loss
-                # L_1 = laplace(tf.slice(self.p0,[ 0,0,0,0]))
-                L_1 = laplace(vgg19._avgpool_layer(self.p0)[0,:,:,0]) + \
-                      laplace(vgg19._avgpool_layer(self.p0)[0,:,:,1]) + \
-                      laplace(vgg19._avgpool_layer(self.p0)[0,:,:,2])
-                L_2 = laplace(vgg19._avgpool_layer(self.x)[0,:,:,0]) + \
-                      laplace(vgg19._avgpool_layer(self.x)[0,:,:,1])+ \
-                      laplace(vgg19._avgpool_layer(self.x)[0,:,:,2])
-                # L_1 = laplace(self.p0[0][:][:][0])
-                # L_2 = laplace(self.x)
-                L_laplacian = 100 * tf.reduce_sum(tf.pow(L_1 - L_2, 2))
-
 
                 if self.multi_style == True:
                     B = self.Bs[id]  # style feature of second style (if exists)
@@ -178,9 +172,26 @@ class StyleTransfer:
         alpha = self.loss_ratio
         beta = 1
 
-        _, h, w, d = self.content_img.shape
-        c = tf.Variable(np.zeros((1, h, w, d), dtype=np.float32))
-        l_tv = tf.image.total_variation(c)
+        L_laplacian = 0
+        if self.laplace:
+            # laplacian loss
+
+            L_1 = laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 0]) + \
+                  laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 1]) + \
+                  laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 2])
+            L_2 = laplace(vgg19._avgpool_layer(self.x)[0, :, :, 0]) + \
+                  laplace(vgg19._avgpool_layer(self.x)[0, :, :, 1]) + \
+                  laplace(vgg19._avgpool_layer(self.x)[0, :, :, 2])
+            # L_1 = laplace(self.p0[0][:][:][0])
+            # L_2 = laplace(self.x)
+            L_laplacian = self.lap_lambda * tf.reduce_sum(tf.pow(L_1 - L_2, 2))
+
+        l_tv = 0
+        if self.tv:
+            _, h, w, d = self.content_img.shape
+            c = tf.Variable(np.zeros((1, h, w, d), dtype=np.float32))
+            l_tv = tf.image.total_variation(c)
+
         self.L_content = L_content
         self.L_style = L_style
         self.L_total = alpha*L_content + beta*L_style + 1e-3 * l_tv + L_laplacian
@@ -220,9 +231,9 @@ class StyleTransfer:
         final_image = np.clip(self.net.undo_preprocess(final_image), 0.0, 255.0)
 
 
-        # if self.color_preserve == True:
+        if self.color_preserve:
             # color presevering
-        # final_image = self.convert_to_original_colors(np.copy(self.content_img), final_image)
+            final_image = self.convert_to_original_colors(np.copy(self.content_img), final_image)
 
         return final_image
 

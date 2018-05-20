@@ -43,6 +43,10 @@ def parse_args():
     parser.add_argument('--color_preseving', type=str, default=False, help='If preserve color')
     parser.add_argument('--color_convert_type', type=str, default='yuv', help='Color convert type')
 
+    parser.add_argument('--tv', type=str, default='yuv', help='')
+
+    parser.add_argument('--laplace', type=bool, default=False, help='')
+    parser.add_argument('--lap_lambda', type=float, default=100, help='')
     return check_args(parser.parse_args())
 
 """checking arguments"""
@@ -160,7 +164,10 @@ def main():
                                       content_loss_norm_type=args.content_loss_norm_type,
                                       style_image2=add_one_dim(style_image2),
                                       style_ratio=args.style_ratio,
-                                      multi_style=args.multi_style
+                                      multi_style=args.multi_style,
+                                      laplace=args.laplace,
+                                      lap_lambda=args.lap_lambda,
+                                      tv=args.tv
                                       )
     # launch the graph in a session
     result_image = st.update()
