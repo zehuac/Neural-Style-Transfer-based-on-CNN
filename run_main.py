@@ -107,7 +107,7 @@ def main():
         exit()
 
     # initiate VGG19 model
-    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME     # 这个名字是写死的
+    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME     # this name is fixed
     vgg_net = vgg19.VGG19(model_file_path)
 
     # load content image and style image
