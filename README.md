@@ -39,4 +39,11 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 | --style2  | 第二张风格图片的路径    |
 | --multi_style  | True/False 是否进行多风格迁移|
 | --style_ratio  | 两个风格图片损失所占的比重    |
+| --color_preseving  | True/False, 是否使用color preserving  |
+| --color_convert_type  | yuv/ycrcb/luv/lab，疑似没用  |
+| --tv  | True/False, 是否添加tv项 |
+| --laplace  | True/False, 是否添加laplace项 |
+| --lap_lambda  | laplace项的系数 |
+
+
 
