@@ -1,42 +1,39 @@
-python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg
+python run_main.py --content images/05.jpg --style images/starry-night.jpg --output ret_regu.jpg
 
 
-python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
+python run_main.py --content images/01.jpg --style images/the_scream.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
+
+python run_main.py --content images/Tokyo_day.jpg --style images/Tokyo_night.jpg --output Tokyo.jpg --initial_type content  
+
+python run_main.py --content images/my.jpg --style images/fuchunshanjutu.jpg --output my_fuchunshanju.jpg
 
 args
 
--- model_path	é¢„è®­ç»ƒçš„VGGæ¨¡å‹çš„å‚æ•°æ–‡ä»¶çš„è·¯å¾„
+-- model_path	Ô¤ÑµÁ·µÄVGGÄ£ĞÍµÄ²ÎÊıÎÄ¼şµÄÂ·¾¶
 
---content	å†…å®¹å›¾ç‰‡çš„è·¯å¾„
+--content	ÄÚÈİÍ¼Æ¬µÄÂ·¾¶
 
---style		é£æ ¼å›¾ç‰‡çš„è·¯å¾„
+--style		·ç¸ñÍ¼Æ¬µÄÂ·¾¶
 
---output	è¾“å‡ºå›¾ç‰‡çš„è·¯å¾„
+--output	Êä³öÍ¼Æ¬µÄÂ·¾¶
 
---loss_ratio	å†…å®¹æŸå¤±å’Œé£æ ¼æŸå¤±çš„ç›¸å¯¹æƒé‡ï¼Œå°±æ˜¯è®ºæ–‡ä¸­å…¬å¼7çš„alphaå’Œbeta
+--loss_ratio	ÄÚÈİËğÊ§ºÍ·ç¸ñËğÊ§µÄÏà¶ÔÈ¨ÖØ£¬¾ÍÊÇÂÛÎÄÖĞ¹«Ê½7µÄalphaºÍbeta
 
---content_layers	ç”¨äºè®¡ç®—å†…å®¹æŸå¤±çš„representation
+--content_layers	ÓÃÓÚ¼ÆËãÄÚÈİËğÊ§µÄrepresentation
 
---style_layers		ç”¨äºè®¡ç®—é£æ ¼æŸå¤±çš„representationï¼Œè¿™ä¸ªrepresentionå–è‡ªå¾ˆå¤šå±‚ï¼Œå¹¶å¯¹å®ƒä»¬åšä¸€ä¸ªåŠ æƒå’Œ
+--style_layers		ÓÃÓÚ¼ÆËã·ç¸ñËğÊ§µÄrepresentation£¬Õâ¸örepresentionÈ¡×ÔºÜ¶à²ã£¬²¢¶ÔËüÃÇ×öÒ»¸ö¼ÓÈ¨ºÍ
 
---content_layer_weights	å†…å®¹representionçš„æƒé‡ï¼Œå®é™…ä¸Šè®ºæ–‡ä¸­å’Œä»£ç ä¸­éƒ½åªé‡‡ç”¨äº†ä¸€ä¸ªrepresentation(4_2)ï¼Œå› æ­¤è¯¥æƒé‡åªæœ‰ä¸€ä¸ª
+--content_layer_weights	ÄÚÈİrepresentionµÄÈ¨ÖØ£¬Êµ¼ÊÉÏÂÛÎÄÖĞºÍ´úÂëÖĞ¶¼Ö»²ÉÓÃÁËÒ»¸örepresentation(4_2)£¬Òò´Ë¸ÃÈ¨ÖØÖ»ÓĞÒ»¸ö
 
---style_layer_weights	é£æ ¼representionçš„æƒé‡ï¼Œé»˜è®¤æœ‰äº”ä¸ªï¼Œåˆ†åˆ«å¯¹åº”äºæ¯å±‚æŒ‘é€‰å‡ºæ¥çš„ç”¨äºè®¡ç®—é£æ ¼æŸå¤±çš„representation
+--style_layer_weights	·ç¸ñrepresentionµÄÈ¨ÖØ£¬Ä¬ÈÏÓĞÎå¸ö£¬·Ö±ğ¶ÔÓ¦ÓÚÃ¿²ãÌôÑ¡³öÀ´µÄÓÃÓÚ¼ÆËã·ç¸ñËğÊ§µÄrepresentation
 
---initial_type		æœ‰ä¸‰ä¸ªé€‰é¡¹ï¼Œå°†åˆæ—¶å¾…åˆæˆå›¾ç‰‡è®¾ç½®ä¸ºå†…å®¹å›¾ç‰‡æˆ–é£æ ¼å›¾ç‰‡æˆ–éšæœºç™½å™ªå£°å›¾ç‰‡(è®ºæ–‡ä¸­çš„åšæ³•)ã€‚	
+--initial_type		ÓĞÈı¸öÑ¡Ïî£¬½«³õÊ±´ıºÏ³ÉÍ¼Æ¬ÉèÖÃÎªÄÚÈİÍ¼Æ¬»ò·ç¸ñÍ¼Æ¬»òËæ»ú°×ÔëÉùÍ¼Æ¬(ÂÛÎÄÖĞµÄ×ö·¨)¡£	
 
---max_size		è¾“å…¥å›¾ç‰‡çš„æœ€å¤§å°ºå¯¸ï¼Œé»˜è®¤512
+--max_size		ÊäÈëÍ¼Æ¬µÄ×î´ó³ß´ç£¬Ä¬ÈÏ512
 
---content_loss_norm_type	è¯¥é€‰é¡¹ç”¨äºç¡®å®šå†…å®¹æŸå¤±å‡½æ•°normalizationçš„æ–¹å¼ï¼Œç›®æµ‹æ²¡å•¥ç”¨ã€‚
+--content_loss_norm_type	¸ÃÑ¡ÏîÓÃÓÚÈ·¶¨ÄÚÈİËğÊ§º¯ÊınormalizationµÄ·½Ê½£¬Ä¿²âÃ»É¶ÓÃ¡£
 
---num_iter		è¿­ä»£æ¬¡æ•°ï¼Œå®ƒé»˜è®¤è®¾ç½®çš„æ˜¯1000ï¼Œä½†æˆ‘æ¯æ¬¡éƒ½è·‘äº†1000å¤šæ¬¡ã€‚ã€‚
+--num_iter		µü´ú´ÎÊı£¬ËüÄ¬ÈÏÉèÖÃµÄÊÇ1000£¬µ«ÎÒÃ¿´Î¶¼ÅÜÁË1000¶à´Î¡£¡£
 
 
-ä»¥ä¸‹æ˜¯æˆ‘åŠ çš„ï¼š
-
---style2 Â  Â  Â  Â ç¬¬äºŒå¼ é£æ ¼å›¾ç‰‡çš„è·¯å¾„
-
---multi_style Â  True/False æ˜¯å¦è¿›è¡Œå¤šé£æ ¼è¿ç§»
-
---style_ratio Â  ä¸¤ä¸ªé£æ ¼å›¾ç‰‡æŸå¤±æ‰€å çš„æ¯”é‡
 

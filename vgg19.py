@@ -1,4 +1,3 @@
-# coding=UTF-8
 # Copyright (c) 2015-2016 Anish Athalye. Released under GPLv3.
 # Most code in this file was borrowed from https://github.com/anishathalye/neural-style/blob/master/vgg.py
 
@@ -20,8 +19,12 @@ def _pool_layer(input):
     return tf.nn.max_pool(input, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1),
             padding='SAME')
 
+def _avgpool_layer(input):
+    return tf.nn.avg_pool(input, ksize=(1, 4, 4, 1), strides=(1, 4, 4, 1),
+            padding='VALID')
 
-def preprocess(image, mean_pixel):  # Setting the mean to be 0, but why?
+
+def preprocess(image, mean_pixel):  # 把均值设置为0， 为什么？
     return image - mean_pixel
 
 
@@ -59,7 +62,7 @@ class VGG19:
         return image+self.mean_pixel
 
     def feed_forward(self, input_image, scope=None):
-        net = {}        # net is a dictionary, mapping the name of every layer to the corresponding output
+        net = {}        # net 是一个字典，它记录了每一层的名称到该层输出的映射
         current = input_image
 
         with tf.variable_scope(scope):

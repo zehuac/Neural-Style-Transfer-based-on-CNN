@@ -1,4 +1,3 @@
-# coding=UTF-8
 import tensorflow as tf
 import numpy as np
 import utils
@@ -40,6 +39,9 @@ def parse_args():
     parser.add_argument('--max_size', type=int, default=512, help='The maximum width or height of input images')
     parser.add_argument('--content_loss_norm_type', type=int, default=3, choices=[1, 2, 3], help='Different types of normalization for content loss')
     parser.add_argument('--num_iter', type=int, default=1000, help='The number of iterations to run')
+
+    parser.add_argument('--color_preseving', type=str, default=False, help='If preserve color')
+    parser.add_argument('--color_convert_type', type=str, default='yuv', help='Color convert type')
 
     return check_args(parser.parse_args())
 
@@ -108,7 +110,7 @@ def main():
         exit()
 
     # initiate VGG19 model
-    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME     # this name is fixed
+    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME     # 这个名字是写死的
     vgg_net = vgg19.VGG19(model_file_path)
 
     # load content image and style image

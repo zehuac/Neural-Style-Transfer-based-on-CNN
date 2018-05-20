@@ -1,7 +1,7 @@
-python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg
+python run_main.py --content images/05.jpg --style images/shipwreck.jpg --output ret.jpg --color_convert_type yuv --color_preseving True
 
 
-python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
+python run_main.py --content images/01.jpg --style images/the_scream.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
 
 args
 
@@ -27,7 +27,7 @@ args
 
 --max_size		输入图片的最大尺寸，默认512
 
---content_loss_norm_type	不太懂，他的解释是该选项用于确定内容损失函数normalization的方式。
+--content_loss_norm_type	该选项用于确定内容损失函数normalization的方式，目测没啥用。
 
 --num_iter		迭代次数，它默认设置的是1000，但我每次都跑了1000多次。。
 

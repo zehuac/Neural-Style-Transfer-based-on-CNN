@@ -1,15 +1,54 @@
-# coding=UTF-8
-
 import tensorflow as tf
 import numpy as np
 import collections
+import cv2
+import vgg19
+
+
+def preprocess(img):
+    # bgr to rgb
+    img = img[..., ::-1]
+    # shape (h, w, d) to (1, h, w, d)
+    img = img[np.newaxis, :, :, :]
+    img -= np.array([123.68, 116.779, 103.939]).reshape((1, 1, 1, 3))
+    return img
+
+
+def postprocess(img):
+    img += np.array([123.68, 116.779, 103.939]).reshape((1, 1, 1, 3))
+    # shape (1, h, w, d) to (h, w, d)
+    img = img[0]
+    img = np.clip(img, 0, 255).astype('uint8')
+    # rgb to bgr
+    img = img[..., ::-1]
+    return img
+
+def make_kernel(a):
+  """Transform a 2D array into a convolution kernel"""
+  a = np.asarray(a)
+  a = a.reshape(list(a.shape) + [1,1])
+  return tf.constant(a, dtype=1)
+
+def simple_conv(x, k):
+  """A simplified 2D convolution operation"""
+  x = tf.expand_dims(tf.expand_dims(x, 0), -1)
+  y = tf.nn.depthwise_conv2d(x, k, [1, 1, 1, 1], padding='SAME')
+  return y[0, :, :, 0]
+
+def laplace(x):
+  """Compute the 2D laplacian of an array"""
+  laplace_k = make_kernel([[0., -1., 0.],
+                           [-1., 4., -1.],
+                           [0., -1.0, 0.]])
+  return simple_conv(x, laplace_k)
 
 
 class StyleTransfer:
 
     def __init__(self, content_layer_ids, style_layer_ids, init_image, content_image,
                  style_image, session, net, num_iter, loss_ratio, content_loss_norm_type,
-                 style_image2=np.array([]), style_ratio=0.5, multi_style=False):
+                 style_image2=np.array([]), style_ratio=0.5, multi_style=False, color_convert_type="yuv",
+                 color_preserve=False):
 
         self.net = net
         self.sess = session
@@ -20,6 +59,7 @@ class StyleTransfer:
         self.STYLE_LAYERS = collections.OrderedDict(sorted(style_layer_ids.items()))
 
         # preprocess input images
+        self.content_img = content_image
         self.p0 = np.float32(self.net.preprocess(content_image))
         self.a0 = np.float32(self.net.preprocess(style_image))
         self.x0 = np.float32(self.net.preprocess(init_image))
@@ -34,6 +74,8 @@ class StyleTransfer:
         self.content_loss_norm_type = content_loss_norm_type
         self.num_iter = num_iter
         self.loss_ratio = loss_ratio
+        self.color_convert_type = color_convert_type        # Used for color
+        self.color_preserve = color_preserve
 
         # build graph for style transfer
         self._build_graph()
@@ -75,6 +117,7 @@ class StyleTransfer:
         """ compute loss """
         L_content = 0
         L_style = 0
+        L_laplacian=0
         for id in self.Fs:
             if id in self.CONTENT_LAYERS:
                 ## content loss ##
@@ -112,6 +155,19 @@ class StyleTransfer:
 
                 L_style += w * (1. / (4 * N ** 2 * M ** 2)) * tf.reduce_sum(tf.pow((G-A), 2))
 
+                # laplacian loss
+                # L_1 = laplace(tf.slice(self.p0,[ 0,0,0,0]))
+                L_1 = laplace(vgg19._avgpool_layer(self.p0)[0,:,:,0]) + \
+                      laplace(vgg19._avgpool_layer(self.p0)[0,:,:,1]) + \
+                      laplace(vgg19._avgpool_layer(self.p0)[0,:,:,2])
+                L_2 = laplace(vgg19._avgpool_layer(self.x)[0,:,:,0]) + \
+                      laplace(vgg19._avgpool_layer(self.x)[0,:,:,1])+ \
+                      laplace(vgg19._avgpool_layer(self.x)[0,:,:,2])
+                # L_1 = laplace(self.p0[0][:][:][0])
+                # L_2 = laplace(self.x)
+                L_laplacian = 100 * tf.reduce_sum(tf.pow(L_1 - L_2, 2))
+
+
                 if self.multi_style == True:
                     B = self.Bs[id]  # style feature of second style (if exists)
                     L_style2 = w * (1. / (4 * N ** 2 * M ** 2)) * tf.reduce_sum(tf.pow((G-B), 2))
@@ -122,9 +178,12 @@ class StyleTransfer:
         alpha = self.loss_ratio
         beta = 1
 
+        _, h, w, d = self.content_img.shape
+        c = tf.Variable(np.zeros((1, h, w, d), dtype=np.float32))
+        l_tv = tf.image.total_variation(c)
         self.L_content = L_content
         self.L_style = L_style
-        self.L_total = alpha*L_content + beta*L_style
+        self.L_total = alpha*L_content + beta*L_style + 1e-3 * l_tv + L_laplacian
 
     def update(self):
         """ define optimizer L-BFGS """
@@ -156,8 +215,14 @@ class StyleTransfer:
         """ get final result """
         final_image = self.sess.run(self.x)
 
+
         # ensure the image has valid pixel-values between 0 and 255
         final_image = np.clip(self.net.undo_preprocess(final_image), 0.0, 255.0)
+
+
+        # if self.color_preserve == True:
+            # color presevering
+        # final_image = self.convert_to_original_colors(np.copy(self.content_img), final_image)
 
         return final_image
 
@@ -179,6 +244,31 @@ class StyleTransfer:
         gram = tf.matmul(tf.transpose(matrix), matrix)
 
         return gram
+
+
+    def convert_to_original_colors(self, content_img, stylized_img):
+        content_img = postprocess(content_img)
+        stylized_img = postprocess(stylized_img)
+        if self.color_convert_type == 'yuv':
+            cvt_type = cv2.COLOR_BGR2YUV
+            inv_cvt_type = cv2.COLOR_YUV2BGR
+        elif self.color_convert_type == 'ycrcb':
+            cvt_type = cv2.COLOR_BGR2YCR_CB
+            inv_cvt_type = cv2.COLOR_YCR_CB2BGR
+        elif self.color_convert_type == 'luv':
+            cvt_type = cv2.COLOR_BGR2LUV
+            inv_cvt_type = cv2.COLOR_LUV2BGR
+        elif self.color_convert_type == 'lab':
+            cvt_type = cv2.COLOR_BGR2LAB
+            inv_cvt_type = cv2.COLOR_LAB2BGR
+        content_cvt = cv2.cvtColor(content_img, cvt_type)
+        stylized_cvt = cv2.cvtColor(stylized_img, cvt_type)
+        c1, _, _ = cv2.split(stylized_cvt)
+        _, c2, c3 = cv2.split(content_cvt)
+        merged = cv2.merge((c1, c2, c3))
+        dst = cv2.cvtColor(merged, inv_cvt_type).astype(np.float32)
+        dst = preprocess(dst)
+        return dst
 
 
 
