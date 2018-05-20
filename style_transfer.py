@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 import collections
 
+# coding=utf-8
+
 class StyleTransfer:
 
     def __init__(self, content_layer_ids, style_layer_ids, init_image, content_image,
