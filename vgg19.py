@@ -20,7 +20,7 @@ def _pool_layer(input):
             padding='SAME')
 
 
-def preprocess(image, mean_pixel):  # 把均值设置为0， 为什么？
+def preprocess(image, mean_pixel):  # Setting the mean to be 0, but why?
     return image - mean_pixel
 
 
@@ -58,7 +58,7 @@ class VGG19:
         return image+self.mean_pixel
 
     def feed_forward(self, input_image, scope=None):
-        net = {}        # net 是一个字典，它记录了每一层的名称到该层输出的映射
+        net = {}        # net is a dictionary, mapping the name of every layer to the corresponding output
         current = input_image
 
         with tf.variable_scope(scope):
