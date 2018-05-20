@@ -1,8 +1,9 @@
+# coding=UTF-8
+
 import tensorflow as tf
 import numpy as np
 import collections
 
-# coding=utf-8
 
 class StyleTransfer:
 
