@@ -45,10 +45,11 @@ def parse_args():
     parser.add_argument('--color_convert_type', type=str, default='yuv', help='Color convert type')
     parser.add_argument('--color_preserve_algo', type=int, default=1, choices=[1, 2], help='Color preserve algorithm')
 
-    parser.add_argument('--tv', type=str, default='yuv', help='')
+    parser.add_argument('--tv', type=bool, default=False, help='')
 
     parser.add_argument('--laplace', type=bool, default=False, help='')
     parser.add_argument('--lap_lambda', type=float, default=100, help='')
+    parser.add_argument('--pooling_size', type=int, default=4, choices=[4, 16, 20], help='')
     return check_args(parser.parse_args())
 
 """checking arguments"""
@@ -172,7 +173,8 @@ def main():
                                       color_convert_type=args.color_convert_type,
                                       color_preserve_algo=args.color_preserve_algo,
                                       lap_lambda=args.lap_lambda,
-                                      tv=args.tv
+                                      tv=args.tv,
+                                      pooling_size=args.pooling_size
                                       )
     # launch the graph in a session
     result_image = st.update()

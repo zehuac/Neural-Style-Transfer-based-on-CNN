@@ -49,7 +49,7 @@ class StyleTransfer:
     def __init__(self, content_layer_ids, style_layer_ids, init_image, content_image,
                  style_image, session, net, num_iter, loss_ratio, content_loss_norm_type,
                  style_image2=np.array([]), style_ratio=0.5, multi_style=False, color_convert_type="yuv",
-                 color_preserve=False, color_preserve_algo=1, laplace=False, lap_lambda=10, tv=False):
+                 color_preserve=False, color_preserve_algo=1, laplace=False, lap_lambda=10, tv=False, pooling_size=4):
 
         self.net = net
         self.sess = session
@@ -83,6 +83,7 @@ class StyleTransfer:
         self.laplace = laplace
         self.lap_lambda = lap_lambda
         self.tv = tv
+        self.pooling_size = pooling_size
 
         # build graph for style transfer
         self._build_graph()
@@ -175,22 +176,26 @@ class StyleTransfer:
         beta = 1
 
         L_laplacian = 0
+        L_1 = L_2 = L_3 = L_4 = 0
         if self.laplace:
             # laplacian loss
 
-            L_1 = laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 0]) + \
-                  laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 1]) + \
-                  laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 2])
-            L_2 = laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 0]) + \
-                  laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 1]) + \
-                  laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 2])
+            if self.pooling_size == 4 or self.pooling_size == 20:
+                L_1 = laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 0]) + \
+                      laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 1]) + \
+                      laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 2])
+                L_2 = laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 0]) + \
+                      laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 1]) + \
+                      laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 2])
 
-            L_3 = laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 0]) + \
-                  laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 1]) + \
-                  laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 2])
-            L_4 = laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 0]) + \
-                  laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 1]) + \
-                  laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 2])
+            if self.pooling_size == 16 or self.pooling_size == 20:
+
+                L_3 = laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 0]) + \
+                      laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 1]) + \
+                      laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 2])
+                L_4 = laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 0]) + \
+                      laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 1]) + \
+                      laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 2])
 
             # L_1 = np.abs(laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 0])) + \
             #       np.abs(laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 1])) + \
@@ -198,8 +203,7 @@ class StyleTransfer:
             # L_2 = np.abs(laplace(vgg19._avgpool_layer(self.x)[0, :, :, 0])) + \
             #       np.abs(laplace(vgg19._avgpool_layer(self.x)[0, :, :, 1])) + \
             #       np.abs(laplace(vgg19._avgpool_layer(self.x)[0, :, :, 2]))
-            # L_1 = laplace(self.p0[0][:][:][0])
-            # L_2 = laplace(self.x)
+
             L_laplacian = 50 * tf.reduce_sum(tf.pow(L_1 - L_2, 2)) \
                           + 50 * tf.reduce_sum(tf.pow(L_3 - L_4, 2))
 
