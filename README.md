@@ -14,7 +14,7 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 
 ### Parameters
 
-| No. | Function  |
+| Para | Function  |
 | ---------- | :-----------:  |
 | --model_path  | 预训练的VGG模型的参数文件的路径    |
 | --content  | 内容图片的路径    |
@@ -34,13 +34,14 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 
 以下是我加的：
 
-| No. | Function  |
+| Para | Function  |
 | ---------- | :-----------:  |
 | --style2  | 第二张风格图片的路径    |
 | --multi_style  | True/False 是否进行多风格迁移|
 | --style_ratio  | 两个风格图片损失所占的比重    |
 | --color_preseving  | True/False, 是否使用color preserving  |
-| --color_convert_type  | yuv/ycrcb/luv/lab，疑似没用  |
+| --color_convert_type  | yuv/ycrcb/luv/lab  |
+| --color_preserve_algo  | 1/2, 1 直接替换亮度通道，2 使用论文中的那个公式 |
 | --tv  | True/False, 是否添加tv项 |
 | --laplace  | True/False, 是否添加laplace项 |
 | --lap_lambda  | laplace项的系数 |
