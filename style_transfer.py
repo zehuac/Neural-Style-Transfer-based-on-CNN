@@ -176,7 +176,7 @@ class StyleTransfer:
         beta = 1
 
         L_laplacian = 0
-        L_1 = L_2 = L_3 = L_4 = 0
+        L_1 = L_2 = L_3 = L_4 = 0.
         if self.laplace:
             # laplacian loss
 
