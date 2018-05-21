@@ -45,6 +45,7 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 | --tv  | True/False, 是否添加tv项 |
 | --laplace  | True/False, 是否添加laplace项 |
 | --lap_lambda  | laplace项的系数 |
+| --pooling_size  | ? |
 
 
 
