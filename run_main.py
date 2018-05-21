@@ -41,8 +41,9 @@ def parse_args():
     parser.add_argument('--content_loss_norm_type', type=int, default=3, choices=[1, 2, 3], help='Different types of normalization for content loss')
     parser.add_argument('--num_iter', type=int, default=1000, help='The number of iterations to run')
 
-    parser.add_argument('--color_preseving', type=str, default=False, help='If preserve color')
+    parser.add_argument('--color_preserving', type=str, default=False, help='If preserve color')
     parser.add_argument('--color_convert_type', type=str, default='yuv', help='Color convert type')
+    parser.add_argument('--color_preserve_algo', type=int, default=1, choices=[1, 2], help='Color preserve algorithm')
 
     parser.add_argument('--tv', type=str, default='yuv', help='')
 
@@ -167,6 +168,9 @@ def main():
                                       style_ratio=args.style_ratio,
                                       multi_style=args.multi_style,
                                       laplace=args.laplace,
+                                      color_preserve=args.color_preserving,
+                                      color_convert_type=args.color_convert_type,
+                                      color_preserve_algo=args.color_preserve_algo,
                                       lap_lambda=args.lap_lambda,
                                       tv=args.tv
                                       )

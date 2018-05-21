@@ -49,7 +49,7 @@ class StyleTransfer:
     def __init__(self, content_layer_ids, style_layer_ids, init_image, content_image,
                  style_image, session, net, num_iter, loss_ratio, content_loss_norm_type,
                  style_image2=np.array([]), style_ratio=0.5, multi_style=False, color_convert_type="yuv",
-                 color_preserve=False, laplace=False, lap_lambda=10, tv=False):
+                 color_preserve=False, color_preserve_algo=1, laplace=False, lap_lambda=10, tv=False):
 
         self.net = net
         self.sess = session
@@ -79,6 +79,7 @@ class StyleTransfer:
         # switches
         self.color_convert_type = color_convert_type        # Used for color
         self.color_preserve = color_preserve
+        self.color_preserve_algo = color_preserve_algo
         self.laplace = laplace
         self.lap_lambda = lap_lambda
         self.tv = tv
@@ -195,7 +196,7 @@ class StyleTransfer:
 
         self.L_content = L_content
         self.L_style = L_style
-        self.L_total = alpha*L_content + beta*L_style + 1e-3 * l_tv + L_laplacian
+        self.L_total = alpha * L_content + beta * L_style + 1e-3 * l_tv + L_laplacian
 
     def update(self):
         """ define optimizer L-BFGS """
@@ -275,10 +276,20 @@ class StyleTransfer:
             inv_cvt_type = cv2.COLOR_LAB2BGR
         content_cvt = cv2.cvtColor(content_img, cvt_type)
         stylized_cvt = cv2.cvtColor(stylized_img, cvt_type)
-        c1, _, _ = cv2.split(stylized_cvt)
-        _, c2, c3 = cv2.split(content_cvt)
-        merged = cv2.merge((c1, c2, c3))
+
+        s_c1, _, _ = cv2.split(stylized_cvt)
+        c_c1, c2, c3 = cv2.split(content_cvt)
+        if self.color_preserve_algo == 1:
+            merged = cv2.merge((s_c1, c2, c3))
+        elif self.color_preserve_algo == 2:
+            s_mean = np.mean(s_c1)
+            s_var = np.var(s_c1)
+            c_mean = np.mean(c_c1)
+            c_var = np.var(c_c1)
+            s_c = c_var * (s_c1 - s_mean) / s_var + c_mean
+            merged = cv2.merge((s_c.astype(np.uint8), c2, c3))
         dst = cv2.cvtColor(merged, inv_cvt_type).astype(np.float32)
+
         dst = preprocess(dst)
         return dst
 
