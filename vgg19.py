@@ -20,8 +20,12 @@ def _pool_layer(input):
     return tf.nn.max_pool(input, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1),
             padding='SAME')
 
-def _avgpool_layer(input):
+def _avgpool_layer4(input):
     return tf.nn.avg_pool(input, ksize=(1, 4, 4, 1), strides=(1, 4, 4, 1),
+            padding='VALID')
+
+def _avgpool_layer16(input):
+    return tf.nn.avg_pool(input, ksize=(1, 16, 16, 1), strides=(1, 16, 16, 1),
             padding='VALID')
 
 
