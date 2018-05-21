@@ -178,15 +178,30 @@ class StyleTransfer:
         if self.laplace:
             # laplacian loss
 
-            L_1 = laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 0]) + \
-                  laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 1]) + \
-                  laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 2])
-            L_2 = laplace(vgg19._avgpool_layer(self.x)[0, :, :, 0]) + \
-                  laplace(vgg19._avgpool_layer(self.x)[0, :, :, 1]) + \
-                  laplace(vgg19._avgpool_layer(self.x)[0, :, :, 2])
+            L_1 = laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 0]) + \
+                  laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 1]) + \
+                  laplace(vgg19._avgpool_layer4(self.p0)[0, :, :, 2])
+            L_2 = laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 0]) + \
+                  laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 1]) + \
+                  laplace(vgg19._avgpool_layer4(self.x)[0, :, :, 2])
+
+            L_3 = laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 0]) + \
+                  laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 1]) + \
+                  laplace(vgg19._avgpool_layer16(self.p0)[0, :, :, 2])
+            L_4 = laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 0]) + \
+                  laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 1]) + \
+                  laplace(vgg19._avgpool_layer16(self.x)[0, :, :, 2])
+
+            # L_1 = np.abs(laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 0])) + \
+            #       np.abs(laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 1])) + \
+            #       np.abs(laplace(vgg19._avgpool_layer(self.p0)[0, :, :, 2]))
+            # L_2 = np.abs(laplace(vgg19._avgpool_layer(self.x)[0, :, :, 0])) + \
+            #       np.abs(laplace(vgg19._avgpool_layer(self.x)[0, :, :, 1])) + \
+            #       np.abs(laplace(vgg19._avgpool_layer(self.x)[0, :, :, 2]))
             # L_1 = laplace(self.p0[0][:][:][0])
             # L_2 = laplace(self.x)
-            L_laplacian = self.lap_lambda * tf.reduce_sum(tf.pow(L_1 - L_2, 2))
+            L_laplacian = 50 * tf.reduce_sum(tf.pow(L_1 - L_2, 2)) \
+                          + 50 * tf.reduce_sum(tf.pow(L_3 - L_4, 2))
 
         l_tv = 0
         if self.tv:
