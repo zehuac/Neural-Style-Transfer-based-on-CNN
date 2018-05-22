@@ -62,11 +62,14 @@ Optional:
 * ``--style_ratio``: The ratio between two styles. *Default:* ``0.5``
 * ``--color_preseving``: If to use color preserving. *Choices:* ``True/False`` *Default:* ``False``
 * ``--color_convert_type``: Color spaces (YUV, YCrCb, CIE L\*u\*v\*, CIE L\*a\*b\*)  for luminance-matching conversion to original colors. *Choices:* ``yuv``, ``ycrcb``, ``luv``, `lab`. *Default*: ``yuv``
-* ``--color_preserve_algo``: Color preserving algorithm. *Choices:* [1](https://arxiv.org/pdf/1606.05897.pdf) Approach 2, [2](https://github.com/cysmith/neural-style-tf) *Default:* `1`
-
+* ``--color_preserve_algo``: Color preserving algorithm. *Choices:* [1](https://github.com/cysmith/neural-style-tf), [2](https://arxiv.org/pdf/1606.05897.pdf) The Approach #2,  *Default:* `1`
+* `--tv`: If to add the total variational loss function. *Choices:* ``True/False`` *Default:* ``False``
+* `--laplace` If to add the [Laplacian loss](https://arxiv.org/pdf/1707.01253.pdf). *Choices:* ``True/False`` *Default:* ``False``
+* `--lap_lambda` Weight for the Laplacian loss. *Default:* ``100``
+* `--pooling_size' The filter size for pooling layer before using Laplacian operator. *choices:* `4`, `16`, `20(which means to use the [multiple Laplacians](https://arxiv.org/pdf/1707.01253.pdf) with 4*4 and 16*16 pooling layer)` Default:* `4`
 
 | Para | Function  |
-| ---------- | :-----------:  |
+| ---------- | :-----------:  | 
 | --model_path  | 预训练的VGG模型的参数文件的路径    |
 | --content  | 内容图片的路径    |
 | --style  | 风格图片的路径    |
