@@ -50,8 +50,12 @@ Optional:
 * ``--model_path``: Path to the pre-trained VGG model. *Default:* ``pre_trained_model``  
 * ``--loss_ratio``: Weight of content-loss relative to style-loss, the alpha over beta in the paper. *Default:* ``0.5``  
 * ``--content_layers``: Space-separated VGG-19 layer names used for content loss computation. *Default:* ``conv4_2``  
-
-
+* ``--style_layers``: Space-separated VGG-19 layer names used for style loss computation. *Default:* ``relu1_1, relu2_1, relu3_1, relu4_1, relu5_1``  
+* ``--content_layer_weights``: Space-separated weights of each content layer to the content loss. *Default:* ``1.0``
+* ``--style_layer_weights``: Space-separated weights of each style layer to loss. *Default:* ``0.2 0.2 0.2 0.2 0.2``
+* ``--initial_type``: The initial image for optimization. (notation in the paper : x) Choices: content, style, random. *Default:* ``content``
+* ``--max_size``: Maximum width or height of the input images. *Default:* ``512``
+* ``--content_loss_norm_type``: Different types of normalization for content loss. Choices: [1](https://arxiv.org/pdf/1508.06576v2.pdf), [2](https://arxiv.org/pdf/1604.08610.pdf), [3](https://github.com/cysmith/neural-style-tf). *Default:* ``3``
 
 
 | Para | Function  |
