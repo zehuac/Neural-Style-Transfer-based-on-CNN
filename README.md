@@ -68,8 +68,8 @@ Optional:
 ### Acknowledgements
 
 The implementation is based on the project:
-* Tensorflow implementation 'neural-style-tf' by Smith, Cameron
-* Tensorflow implementation 'tensorflow-style-transfer' by hwalsuklee
+* Tensorflow implementation 'neural-style-tf' by [cysmith](https://github.com/cysmith/neural-style-tf)
+* Tensorflow implementation 'tensorflow-style-transfer' by [hwalsuklee](https://github.com/hwalsuklee/tensorflow-style-transfer)
 ### Parameters
 
 | Para | Function  |
