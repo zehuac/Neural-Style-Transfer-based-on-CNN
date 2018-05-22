@@ -65,6 +65,19 @@ Optional:
 * `--lap_lambda` Weight for the Laplacian loss. *Default:* ``100``
 * `--pooling_size` The filter size for pooling layer before using Laplacian operator. *choices:* `4`, `16`, `20` (choosing 20 means to use the [multiple Laplacians](https://arxiv.org/pdf/1707.01253.pdf) with 4x4 and 16x16 pooling layer) Default:* `4`
 
+If you find this code useful for your research, please cite:
+
+```
+@misc{Smith2016,
+  author = {Zehua Chen, Jiaying Yang, Yiping Xie},
+  title = {DL_Project},
+  year = {2018},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/Chen-Z-H/DL_Project},
+}
+```
+
 ### Acknowledgements
 
 The implementation is based on the project:
