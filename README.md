@@ -1,5 +1,5 @@
 ### Neural Style Transfer 
-This is a Tensorflow implementation for several techniques in the following papar:
+This is a Tensorflow implementation for several techniques in the following papars:
 
 ["A Neural Algorithm of Artistic Style"](https://arxiv.org/pdf/1508.06576.pdf) by Leon A. Gatys, Alexander S. Ecker, Matthias Bethge
 
@@ -8,6 +8,11 @@ This is a Tensorflow implementation for several techniques in the following papa
 ["Preserving Color in Neural Artistic Style Transfer"](https://arxiv.org/pdf/1606.05897.pdf) by Leon A. Gatys, Matthias Bethge, Aaron Hertzmann, Eli Shechtman
 
 ["Laplacian-Steered Neural Style Transfer"](https://arxiv.org/pdf/1707.01253.pdf) by Shaohua Li, Xinxing Xu, Liqiang Nie, Tat-Seng Chua
+
+### Setup
+This code is based on Tensorflow. It has been tested on Windows 10 and Ubuntu 16.04 LTS.  
+Dependencies:  
+
 
 ### Download VGG19 via following URL:
 ```
