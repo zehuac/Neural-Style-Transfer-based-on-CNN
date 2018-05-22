@@ -58,7 +58,10 @@ Optional:
 * ``--content_loss_norm_type``: Different types of normalization for content loss. *Choices:* [1](https://arxiv.org/pdf/1508.06576v2.pdf), [2](https://arxiv.org/pdf/1604.08610.pdf), [3](https://github.com/cysmith/neural-style-tf). *Default:* ``3``
 * ``--num_iter``: The number of iterations to run. *Default:* ``1000``
 * ``--multi_style``: If to use multiple style transfer. *Choices:* ``True/False`` *Default:* ``False``
-* ``--style2``: Filename to use multiple style images. *Example:* ``images/kandinsky.jpg``
+* ``--style2``: Filename to use multiple style images. *Default:* ``images/kandinsky.jpg``
+* ``--style_ratio``: The ratio between two styles. *Default:* ``0.5``
+* ``--color_preseving``: If to use color preserving. *Choices:* ``True/False`` *Default:* ``False``
+* ``--color_convert_type``: Color spaces (YUV, YCrCb, CIE L\*u\*v\*, CIE L\*a\*b\*)  for luminance-matching conversion to original colors. *Choices:* ``yuv``, ``ycrcb``, ``luv``, `lab`. *Default*: ``yuv``
 
 | Para | Function  |
 | ---------- | :-----------:  |
