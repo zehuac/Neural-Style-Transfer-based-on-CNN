@@ -62,6 +62,8 @@ Optional:
 * ``--style_ratio``: The ratio between two styles. *Default:* ``0.5``
 * ``--color_preseving``: If to use color preserving. *Choices:* ``True/False`` *Default:* ``False``
 * ``--color_convert_type``: Color spaces (YUV, YCrCb, CIE L\*u\*v\*, CIE L\*a\*b\*)  for luminance-matching conversion to original colors. *Choices:* ``yuv``, ``ycrcb``, ``luv``, `lab`. *Default*: ``yuv``
+* ``--color_preserve_algo``: Color preserving algorithm. *Choices:* [1](https://arxiv.org/pdf/1606.05897.pdf) Approach 2, [2](https://github.com/cysmith/neural-style-tf) *Default:* `1`
+
 
 | Para | Function  |
 | ---------- | :-----------:  |
