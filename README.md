@@ -66,7 +66,7 @@ Optional:
 * `--tv`: If to add the total variational loss function. *Choices:* ``True/False`` *Default:* ``False``
 * `--laplace` If to add the [Laplacian loss](https://arxiv.org/pdf/1707.01253.pdf). *Choices:* ``True/False`` *Default:* ``False``
 * `--lap_lambda` Weight for the Laplacian loss. *Default:* ``100``
-* `--pooling_size' The filter size for pooling layer before using Laplacian operator. *choices:* `4`, `16`, `20(which means to use the [multiple Laplacians](https://arxiv.org/pdf/1707.01253.pdf) with 4*4 and 16*16 pooling layer)` Default:* `4`
+* `--pooling_size' The filter size for pooling layer before using Laplacian operator. *choices:* `4`, `16`, `20(which means to use the [multiple Laplacians](https://arxiv.org/pdf/1707.01253.pdf) with 4x4 and 16x16 pooling layer)` Default:* `4`
 
 | Para | Function  |
 | ---------- | :-----------:  | 
