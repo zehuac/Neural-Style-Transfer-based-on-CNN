@@ -1,5 +1,5 @@
 ### Neural Style Transfer 
-This is a Tensorflow implementation for several techniques in the following papars:
+This is a Tensorflow implementation for several techniques in the following papers:
 
 ["A Neural Algorithm of Artistic Style"](https://arxiv.org/pdf/1508.06576.pdf) by Leon A. Gatys, Alexander S. Ecker, Matthias Bethge
 
@@ -47,8 +47,12 @@ Required:
 * ``--output``: Filename of the output image. *Default:* ``result.jpg``
 
 Optional:
-* ``--model_path``: Path to the pre-trained VGG model. *Default:* ``pre_trained_model``
-* ``--loss_ratio``: Weight of content-loss relative to style-loss, $ \alpha \beta $
+* ``--model_path``: Path to the pre-trained VGG model. *Default:* ``pre_trained_model``  
+* ``--loss_ratio``: Weight of content-loss relative to style-loss, the alpha over beta in the paper. *Default:* ``0.5``  
+* ``--content_layers``: Space-separated VGG-19 layer names used for content loss computation. *Default:* ``conv4_2``  
+
+
+
 
 | Para | Function  |
 | ---------- | :-----------:  |
