@@ -26,7 +26,7 @@ Recommended but optional:
 ```
 http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
 ```
-And please save the file under ``pre_trained_model``
+And please save the file `imagenet-vgg-verydeep-19.mat` under ``pre_trained_model``
 
 ### Commands
   Quick start
@@ -72,7 +72,7 @@ Optional:
 
 The implementation is based on the project:
 * Tensorflow implementation 'neural-style-tf' by Smith, Cameron
-
+* Tensorflow implementation 'tensorflow-style-transfer' by hwalsuklee
 ### Parameters
 
 | Para | Function  |
