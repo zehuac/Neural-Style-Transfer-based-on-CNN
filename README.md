@@ -1,11 +1,11 @@
 ### Neural Style Transfer 
 This is a Tensorflow implementation for several techniques in the following papar:
 
-["Laplacian-Steered Neural Style Transfer"](https://arxiv.org/pdf/1707.01253.pdf)
-
-["A Neural Algorithm of Artistic Style"](https://arxiv.org/pdf/1508.06576.pdf)
+["A Neural Algorithm of Artistic Style"](https://arxiv.org/pdf/1508.06576.pdf)by Leon A. Gatys, Alexander S. Ecker, Matthias Bethge
 
 ["Image Style Transfer Using Convolutional Neural Networks"](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf)
+
+["Laplacian-Steered Neural Style Transfer"](https://arxiv.org/pdf/1707.01253.pdf)
 
 ### Download VGG19 via following URL:
 ```
