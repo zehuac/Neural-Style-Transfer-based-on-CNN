@@ -37,7 +37,7 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 ```
 python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
 ```
-
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 ### Arguments
 
 Required:  
