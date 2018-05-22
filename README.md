@@ -55,8 +55,10 @@ Optional:
 * ``--style_layer_weights``: Space-separated weights of each style layer to loss. *Default:* ``0.2 0.2 0.2 0.2 0.2``
 * ``--initial_type``: The initial image for optimization. (notation in the paper : x) Choices: content, style, random. *Default:* ``content``
 * ``--max_size``: Maximum width or height of the input images. *Default:* ``512``
-* ``--content_loss_norm_type``: Different types of normalization for content loss. Choices: [1](https://arxiv.org/pdf/1508.06576v2.pdf), [2](https://arxiv.org/pdf/1604.08610.pdf), [3](https://github.com/cysmith/neural-style-tf). *Default:* ``3``
-
+* ``--content_loss_norm_type``: Different types of normalization for content loss. *Choices:* [1](https://arxiv.org/pdf/1508.06576v2.pdf), [2](https://arxiv.org/pdf/1604.08610.pdf), [3](https://github.com/cysmith/neural-style-tf). *Default:* ``3``
+* ``--num_iter``: The number of iterations to run. *Default:* ``1000``
+* ``--multi_style``: If to use multiple style transfer. *Choices:* ``True/False`` *Default:* ``False``
+* ``--style2``: Filename to use multiple style images. *Example:* ``images/kandinsky.jpg``
 
 | Para | Function  |
 | ---------- | :-----------:  |
