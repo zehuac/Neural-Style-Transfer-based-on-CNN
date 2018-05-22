@@ -13,10 +13,7 @@ This is a Tensorflow implementation for several techniques in the following pape
 This code is based on Tensorflow. It has been tested on Windows 10 and Ubuntu 16.04 LTS.  
 Dependencies:  
 * Tensowflow
-* nmupy
-* matplotlib
-* scipy
-* PIL  
+* nmupy, matplotlib, scipy, PIL  
 
 Recommended but optional:  
 * CUDA
