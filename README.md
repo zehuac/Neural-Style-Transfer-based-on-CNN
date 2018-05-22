@@ -68,7 +68,7 @@ Optional:
 If you find this code useful for your research, please cite:
 
 ```
-@misc{Smith2016,
+@misc{NST2018,
   author = {Zehua Chen, Jiaying Yang, Yiping Xie},
   title = {DL_Project},
   year = {2018},
