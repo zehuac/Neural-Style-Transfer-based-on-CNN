@@ -24,12 +24,14 @@ Dependencies:
 ```
 http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
 ```
+And please save the file under ``pre_trained_model``
 
 ### Commands
   Quick start
 ```
 python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg
 ```
+  Multi-Style transfer
 ```
 python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
 ```
