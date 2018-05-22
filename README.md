@@ -16,8 +16,8 @@ Dependencies:
 * nmupy
 * matplotlib
 * scipy
-* PIL
-Recommended but optional
+* PIL  
+Recommended but optional  
 * CUDA
 * cudnn
 
