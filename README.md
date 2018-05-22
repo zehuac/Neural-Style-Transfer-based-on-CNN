@@ -13,6 +13,12 @@ This is a Tensorflow implementation for several techniques in the following papa
 This code is based on Tensorflow. It has been tested on Windows 10 and Ubuntu 16.04 LTS.  
 Dependencies:  
 * Tensowflow
+* nmupy
+* matplotlib
+* scipy
+* PIL
+* CUDA
+* cudnn
 
 ### Download VGG19 via following URL:
 ```
@@ -20,7 +26,7 @@ http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
 ```
 
 ### Commands
-
+Quick start
 ```
 python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg
 ```
