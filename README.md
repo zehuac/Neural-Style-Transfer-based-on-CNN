@@ -39,6 +39,9 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 ```
 
 ### Arguments
+Required:  
+* ``--content``: Filename of the content image. *Default:* ``images/tubingen.jpg``
+
 | Para | Function  |
 | ---------- | :-----------:  |
 | --model_path  | 预训练的VGG模型的参数文件的路径    |
