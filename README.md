@@ -1,8 +1,12 @@
 ### Neural Style Transfer 
 code for paper 
+
 [Laplacian-Steered Neural Style Transfer](https://arxiv.org/pdf/1707.01253.pdf)
+
 [A Neural Algorithm of Artistic Style](https://arxiv.org/pdf/1508.06576.pdf)
+
 [Image Style Transfer Using Convolutional Neural Networks](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf)
+
 ### Download VGG19 via following URL:
 ```
 http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
