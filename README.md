@@ -48,7 +48,7 @@ Required:
 
 Optional:
 * ``--model_path``: Path to the pre-trained VGG model. *Default:* ``pre_trained_model``
-* ``--loss_ratio``: Weight of content-loss relative to style-loss, \alpha
+* ``--loss_ratio``: Weight of content-loss relative to style-loss, $\alpha/\beta$
 
 | Para | Function  |
 | ---------- | :-----------:  |
