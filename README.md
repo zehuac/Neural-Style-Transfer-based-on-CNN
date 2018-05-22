@@ -28,13 +28,20 @@ And please save the file `imagenet-vgg-verydeep-19.mat` under ``pre_trained_mode
 ### Commands
   Quick start
 ```
-python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg
+python run_main.py --content images/01.jpg --style images/starry-night.jpg --output result.jpg
 ```
   Multi-Style transfer
 ```
-python run_main.py --content images/01.jpg --style images/starry-night.jpg --output stockholm.jpg --multi_style True --style_ratio 0.5 
+python run_main.py --content images/01.jpg --style images/starry-night.jpg --output result_multi-style.jpg --multi_style True --style_ratio 0.5 
 ```
-
+  Color Preserving 
+```
+python run_main.py --content images/01.jpg --style images/starry-night.jpg --output result_color-preserve_alg-2.jpg --color_preseving True --color_preserve_algo 2
+```
+  Add Laplacian Loss
+```
+python run_main.py --content images/01.jpg --style images/starry-night.jpg --output result_lap_4.jpg --laplace True --pooling_size 4 
+```
 ### Arguments
 
 Required:  
