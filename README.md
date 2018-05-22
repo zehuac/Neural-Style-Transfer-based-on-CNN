@@ -39,8 +39,16 @@ python run_main.py --content images/01.jpg --style images/starry-night.jpg --out
 ```
 
 ### Arguments
+
 Required:  
+
 * ``--content``: Filename of the content image. *Default:* ``images/tubingen.jpg``
+* ``--style``: Filename of the style image. *Default:* ``images/starry-night.jpg``
+* ``--output``: Filename of the output image. *Default:* ``result.jpg``
+
+Optional:
+* ``--model_path``: Path to the pre-trained VGG model. *Default:* ``pre_trained_model``
+* ``--loss_ratio``: Weight of content-loss relative to style-loss, \alpha
 
 | Para | Function  |
 | ---------- | :-----------:  |
