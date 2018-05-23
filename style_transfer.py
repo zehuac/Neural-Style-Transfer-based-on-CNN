@@ -120,12 +120,11 @@ class StyleTransfer:
 
         
         # get layer-values for x
-        self.Fs = self.net.feed_forward(self.x, scope='mixed')      # 这里得到合成图像网络每一层的输出
+        self.Fs = self.net.feed_forward(self.x, scope='mixed')
 
         """ compute loss """
         L_content = 0
         L_style = 0
-        L_laplacian=0
 
         for id in self.Fs:
             if id in self.CONTENT_LAYERS:
@@ -215,7 +214,7 @@ class StyleTransfer:
 
         self.L_content = L_content
         self.L_style = L_style
-        self.L_total = alpha * L_content + beta * L_style + 1e-3 * l_tv + L_laplacian
+        self.L_total = alpha * L_content + beta * L_style + 10 * l_tv + L_laplacian
 
     def update(self):
         """ define optimizer L-BFGS """
@@ -311,13 +310,3 @@ class StyleTransfer:
 
         dst = preprocess(dst)
         return dst
-
-
-
-
-
-
-
-
-
-

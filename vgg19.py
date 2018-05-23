@@ -1,6 +1,4 @@
 # coding=UTF-8
-# Copyright (c) 2015-2016 Anish Athalye. Released under GPLv3.
-# Most code in this file was borrowed from https://github.com/anishathalye/neural-style/blob/master/vgg.py
 
 import tensorflow as tf
 import numpy as np
@@ -29,7 +27,7 @@ def _avgpool_layer16(input):
             padding='VALID')
 
 
-def preprocess(image, mean_pixel):  # 把均值设置为0， 为什么？
+def preprocess(image, mean_pixel):
     return image - mean_pixel
 
 
@@ -67,7 +65,7 @@ class VGG19:
         return image+self.mean_pixel
 
     def feed_forward(self, input_image, scope=None):
-        net = {}        # net 是一个字典，它记录了每一层的名称到该层输出的映射
+        net = {}
         current = input_image
 
         with tf.variable_scope(scope):
