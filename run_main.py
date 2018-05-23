@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument('--initial_type', type=str, default='content', choices=['random', 'content', 'style'], help='The initial image for optimization (notation in the paper : x)')
     parser.add_argument('--max_size', type=int, default=512, help='The maximum width or height of input images')
     parser.add_argument('--content_loss_norm_type', type=int, default=3, choices=[1, 2, 3], help='Different types of normalization for content loss')
-    parser.add_argument('--num_iter', type=int, default=1200, help='The number of iterations to run')
+    parser.add_argument('--num_iter', type=int, default=1000, help='The number of iterations to run')
 
     '''color-preserving'''
     parser.add_argument('--color_preserving', type=bool, default=False, choices=[True, False], help='If preserve color')
