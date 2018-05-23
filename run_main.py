@@ -18,15 +18,15 @@ def parse_args():
     parser.add_argument('--style', type=str, default='images/starry-night.jpg', help='File path of style image (notation in the paper : a)', required=True)
     parser.add_argument('--output', type=str, default='result.jpg', help='File path of output image', required=True)
 
+    '''multi-transfer'''
     parser.add_argument('--style2', type=str, default='images/kandinsky.jpg',
                         help='File path of style image (notation in the paper : a)')
-
-    parser.add_argument('--multi_style', type=bool, default=False,
+    parser.add_argument('--multi_style', type=bool, default=False, choices=[True, False],
                         help='If perform multi-style transfer')
 
     parser.add_argument('--style_ratio', type=float, default=0.5, help='Weight of the two styles')
 
-    parser.add_argument('--loss_ratio', type=float, default=1e-3, help='Weight of content-loss relative to style-loss')
+    parser.add_argument('--loss_ratio', type=float, default=1e-2, help='Weight of content-loss relative to style-loss')
 
     parser.add_argument('--content_layers', nargs='+', type=str, default=['conv4_2'], help='VGG19 layers used for content loss')
     parser.add_argument('--style_layers', nargs='+', type=str, default=['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],
@@ -36,20 +36,23 @@ def parse_args():
     parser.add_argument('--style_layer_weights', nargs='+', type=float, default=[.2, .2, .2, .2, .2],
                         help='Style loss for each content is multiplied by corresponding weight')
 
-    parser.add_argument('--initial_type', type=str, default='content', choices=['random','content','style'], help='The initial image for optimization (notation in the paper : x)')
+    parser.add_argument('--initial_type', type=str, default='content', choices=['random', 'content', 'style'], help='The initial image for optimization (notation in the paper : x)')
     parser.add_argument('--max_size', type=int, default=512, help='The maximum width or height of input images')
     parser.add_argument('--content_loss_norm_type', type=int, default=3, choices=[1, 2, 3], help='Different types of normalization for content loss')
-    parser.add_argument('--num_iter', type=int, default=1000, help='The number of iterations to run')
+    parser.add_argument('--num_iter', type=int, default=1200, help='The number of iterations to run')
 
-    parser.add_argument('--color_preserving', type=str, default=False, help='If preserve color')
+    '''color-preserving'''
+    parser.add_argument('--color_preserving', type=bool, default=False, choices=[True, False], help='If preserve color')
     parser.add_argument('--color_convert_type', type=str, default='yuv', help='Color convert type')
     parser.add_argument('--color_preserve_algo', type=int, default=1, choices=[1, 2], help='Color preserve algorithm')
 
-    parser.add_argument('--tv', type=bool, default=False, help='')
+    parser.add_argument('--tv', type=bool, default=False, choices=[True, False], help='')
 
-    parser.add_argument('--laplace', type=bool, default=False, help='')
+    '''laplace'''
+    parser.add_argument('--laplace', type=bool, default=False, choices=[True, False], help='')
     parser.add_argument('--lap_lambda', type=float, default=100, help='')
     parser.add_argument('--pooling_size', type=int, default=4, choices=[4, 16, 20], help='')
+
     return check_args(parser.parse_args())
 
 """checking arguments"""
@@ -117,7 +120,7 @@ def main():
         exit()
 
     # initiate VGG19 model
-    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME     # 这个名字是写死的
+    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME
     vgg_net = vgg19.VGG19(model_file_path)
 
     # load content image and style image
