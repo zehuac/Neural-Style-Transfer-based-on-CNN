@@ -9,7 +9,6 @@ This is a Tensorflow implementation for several techniques in the following pape
 
 ["Laplacian-Steered Neural Style Transfer"](https://arxiv.org/pdf/1707.01253.pdf) by Shaohua Li, Xinxing Xu, Liqiang Nie, Tat-Seng Chua
 
-Our code are built upon the work https://github.com/hwalsuklee/tensorflow-style-transfer
 
 ### Setup
 This code is based on Tensorflow. It has been tested on Windows 10 and Ubuntu 16.04 LTS.  
